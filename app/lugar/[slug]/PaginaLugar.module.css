@@ -1,0 +1,109 @@
+/* En tu archivo CSS Module, ej: PaginaLugar.module.css */
+
+/* --- NUEVO: CONTENEDOR PRINCIPAL --- */
+/* Arregla el problema de "muy ancho" */
+.paginaContenedor {
+  max-width: 1200px; /* Ancho máximo */
+  margin: 0 auto;    /* Centrado horizontalmente */
+  padding: 16px;    /* Espacio en los bordes */
+}
+
+/* --- ESTILOS DE BOTONES (los mismos de antes) --- */
+.headerBotones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px; /* Más espacio */
+}
+
+.botonIcono {
+  background-color: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 9999px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s;
+}
+
+.botonIcono:hover {
+  background-color: #F9FAFB;
+}
+
+.icono {
+  width: 24px;
+  height: 24px;
+  color: #374151;
+}
+
+/* --- NUEVO: LAYOUT DE GRID (LA CLAVE) --- */
+.gridContenedor {
+  display: grid;
+  grid-template-columns: 1fr; /* 1. Móvil: 1 columna (todo apilado) */
+  gap: 32px; /* Espacio entre info y comentarios */
+}
+
+/* 2. Escritorio (>= 1024px): 2 columnas */
+@media (min-width: 1024px) {
+  .gridContenedor {
+    /* 40% para la info, 60% para comentarios */
+    grid-template-columns: 40% 60%; 
+  }
+}
+
+/* --- NUEVO: ESTILOS COLUMNA INFO (Izquierda) --- */
+.columnaInfo {
+  /* No necesita nada especial, el grid lo posiciona */
+}
+
+.infoImagen {
+  width: 100%;
+  height: 300px; /* Altura fija para la imagen */
+  object-fit: cover; /* Recorta la imagen para que quepa */
+  border-radius: 12px;
+  background-color: #F3F4F6; /* Color de fondo mientras carga */
+  margin-bottom: 16px;
+}
+
+.infoTitulo {
+  font-size: 2.25rem; /* 36px */
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.infoDescripcion {
+  font-size: 1rem; /* 16px */
+  color: #374151;
+  line-height: 1.6; /* Más espacio entre líneas */
+}
+
+
+/* --- NUEVO: ESTILOS COLUMNA COMENTARIOS (Derecha) --- */
+.columnaComentarios {
+  /* El componente ComentariosSection ya tiene sus estilos internos */
+}
+/* ... al final de PaginaLugar.module.css ... */
+
+.centeredMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  font-size: 1.25rem;
+  color: #555;
+}
+
+.botonRegresar {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

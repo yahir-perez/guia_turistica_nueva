@@ -1,0 +1,50 @@
+/* En tu archivo LugaresLista.module.css */
+
+.paginaContenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.gridLugares {
+  display: grid;
+  /* Crea columnas responsivas: 1 en móvil, 2 en tablet, 3 en desktop */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.lugarCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Para que la imagen no se salga de los bordes */
+  text-decoration: none; /* Quita el subrayado del link */
+  color: inherit; /* Hereda el color de texto */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lugarCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cardImagen {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Asegura que la imagen cubra el espacio */
+  background-color: #f3f4f6; /* Color de fondo mientras carga */
+}
+
+.cardTitulo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 16px;
+  color: #1f2937;
+}

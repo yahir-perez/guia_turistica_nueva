@@ -1,0 +1,138 @@
+/* --- ESTILOS TEMPORALES --- */
+
+.formulario {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+  color: #374151; /* gray-700 */
+  margin-bottom: 4px;
+}
+
+.input,
+.textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #D1D5DB; /* gray-300 */
+  border-radius: 6px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-sizing: border-box; /* Importante para que el padding no rompa el width */
+}
+
+.input:focus,
+.textarea:focus {
+  outline: 2px solid #3B82F6; /* blue-500 */
+  border-color: #3B82F6;
+}
+
+.boton {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: #2563EB; /* blue-600 */
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.boton:hover {
+  background-color: #1D4ED8; /* blue-700 */
+}
+
+/* --- Para StarRating.js --- */
+.starWrapper {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* espacio entre estrellas */
+}
+
+.starIcon {
+  width: 24px;  /* Equivalente a h-6 */
+  height: 24px; /* Equivalente a w-6 */
+  color: #D1D5DB; /* Equivalente a text-gray-300 */
+  cursor: pointer;
+}
+
+.starIconFilled {
+  width: 24px;
+  height: 24px;
+  color: #FBBF24; /* Equivalente a text-yellow-400 */
+  cursor: pointer;
+}
+
+/* --- Para la lista de comentarios --- */
+.comentarioCard {
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E5E7EB; /* gray-200 */
+  margin-top: 16px;
+}
+.comentarioHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.comentarioNombre {
+  font-size: 1rem; /* text-md */
+  font-weight: 600;
+  color: #1F2937; /* gray-800 */
+}
+.comentarioTexto {
+  color: #374151; /* gray-700 */
+}
+.comentarioTimestamp {
+  font-size: 0.75rem; /* text-xs */
+  color: #9CA3AF; /* gray-400 */
+  margin-top: 8px;
+}
+/* ... (Todo tu CSS actual para .formulario, .input, .starIcon, etc. va aquí arriba) ... */
+
+/* --- NUEVAS CLASES PARA LOS BOTONES DE HEADER (page.js) --- */
+.headerButton {
+  position: absolute;
+  z-index: 40;
+  padding: 8px; /* p-2 */
+  background-color: rgba(255, 255, 255, 0.85); /* bg-white/80 */
+  border-radius: 9999px; /* rounded-full */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+  backdrop-filter: blur(4px); /* backdrop-blur-sm */
+  transition: transform 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.headerButton:hover {
+  transform: scale(1.1); /* hover:scale-110 */
+}
+
+.headerButtonLeft {
+  top: 16px; /* top-4 */
+  left: 16px; /* left-4 */
+}
+
+.headerButtonRight {
+  top: 16px; /* top-4 */
+  right: 16px; /* right-4 */
+}
+
+.headerIcon {
+  width: 24px;  /* h-6 */
+  height: 24px; /* w-6 */
+  color: #1F2937; /* text-gray-800 */
+}
