@@ -1,5 +1,123 @@
+/* ================================
+   Tailwind - Importación básica
+================================ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ... (El resto de tus estilos globales pueden ir aquí abajo) ... */
+/* ================================
+   Fondo global con degradado turístico
+================================ */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Degradado azul turístico */
+  background: linear-gradient(135deg, #a8edea, #7ac0ff, #b3e0ff);
+  background-attachment: fixed;
+  font-family: 'Inter', sans-serif;
+  color: #1f2937; /* text-gray-800 */
+}
+
+/* ================================
+   Scrollbar moderno
+================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 115, 230, 0.6);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 115, 230, 0.8);
+}
+
+/* ================================
+   Contenedores tipo Glassmorphism
+   (puedes usarlos con la clase .glass)
+================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+}
+
+/* ================================
+   Tarjetas globales
+================================ */
+.card {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: saturate(180%) blur(14px);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ================================
+   Texto global
+================================ */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: #1e293b; /* slate-800 */
+}
+
+p {
+  line-height: 1.6;
+  color: #475569; /* slate-600 */
+}
+
+/* ================================
+   Botones globales personalizados
+================================ */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: #0284c7;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0369a1;
+}
+
+/* ================================
+   Inputs modernos
+================================ */
+input, textarea {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
+  background: rgba(255, 255, 255, 0.85);
+}
