@@ -1,88 +1,136 @@
-// En tu archivo de página, ej: app/lugares/[lugarId]/page.js
 "use client";
-
-// --- 1. IMPORTACIONES NECESARIAS ---
 import { useRouter } from 'next/navigation';
-import { ArrowLeftIcon, ShareIcon } from '@heroicons/react/24/solid';
-
-// Tus otras importaciones
-import ComentariosSection from './ComentariosSection'; // Ajusta la ruta
-// Asumo que tienes un CSS Module para esta página
-import styles from './PaginaLugar.module.css'; 
-
-// (Asumo que también cargas los datos del lugar)
-// import { db } from '../../lib/firebase';
-// import { doc, getDoc } from 'firebase/firestore';
-// import { useState, useEffect } from 'react';
+import { use, useEffect, useState } from 'react';
+import { lugares } from '../../data/lugares';
+import { ArrowLeft, Share2, MapPin, Navigation, Star } from 'lucide-react';
+import ComentariosSection from './ComentariosSection';
+// IMPORTANTE: Importamos tu CSS Module
+import styles from './PaginaLugar.module.css';
 
 export default function LugarDetallePage({ params }) {
-  const { lugarId } = params;
   const router = useRouter();
+  
+  // 1. LÓGICA DE DATOS (Intacta y segura)
+  const paramsDesenvueltos = use(params);
+  // Usamos '==' para encontrar el lugar sea texto o número
+  const lugar = lugares.find(l => l.id == paramsDesenvueltos.slug);
+  
+  const [copiado, setCopiado] = useState(false);
 
-  // (Aquí iría tu lógica para cargar la info del lugar, si la tienes)
-  // const [lugar, setLugar] = useState(null);
-  // useEffect(() => { ... lógica para getDoc(doc(db, 'lugares', lugarId)) ... }, [lugarId]);
-  // Por ahora, usaremos un nombre genérico para compartir
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  // --- 2. FUNCIÓN PARA COMPARTIR ---
+  const handleBack = () => {
+    if (window.history.length > 1) router.back();
+    else router.push('/'); 
+  };
+
   const handleShare = async () => {
-    const shareData = {
-      title: `¡Mira este lugar!`, // Puedes poner: `¡Mira este lugar: ${lugar.nombre}!`
-      text: 'Te recomiendo visitar este lugar.',
-      url: window.location.href, // Comparte la URL actual
-    };
-
-    try {
-      if (navigator.share) {
-        // API nativa de compartir (móviles)
-        await navigator.share(shareData);
-      } else {
-        // Fallback para escritorio (copiar al portapapeles)
-        await navigator.clipboard.writeText(window.location.href);
-        alert('¡Enlace copiado al portapapeles!');
-      }
-    } catch (err) {
-      console.error('Error al compartir:', err);
-      alert('No se pudo compartir el enlace.');
+    const url = typeof window !== 'undefined' ? window.location.href : '';
+    if (navigator.share) {
+      try { await navigator.share({ title: lugar?.nombre, url }); } catch (e) {}
+    } else {
+        await navigator.clipboard.writeText(url);
+        setCopiado(true);
+        setTimeout(() => setCopiado(false), 2000);
     }
   };
 
+  const handleRuta = () => {
+    if (lugar?.coordenadas) {
+      const [lat, lng] = lugar.coordenadas;
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
+    }
+  };
+
+  const scrollToComentarios = () => {
+    // En este diseño de grid ya se ven los comentarios, pero dejamos el scroll por si acaso en móvil
+    document.getElementById('seccion-comentarios')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Mensaje de error usando tu clase .centeredMessage
+  if (!lugar) return (
+    <div className={styles.centeredMessage}>
+        <p>Lugar no encontrado</p>
+        <button onClick={() => router.push('/')} className={styles.botonRegresar}>
+            Volver al Inicio
+        </button>
+    </div>
+  );
+
   return (
-    // 3. CONTENEDOR PRINCIPAL CON ESTILO
+    // Usamos .paginaContenedor del CSS
     <div className={styles.paginaContenedor}>
       
-      {/* --- 4. HEADER CON LOS BOTONES --- */}
+      {/* --- HEADER BOTONES --- */}
       <div className={styles.headerBotones}>
-        {/* BOTÓN DE REGRESO */}
-        <button 
-          onClick={() => router.back()} 
-          className={styles.botonIcono}
-          aria-label="Regresar"
-        >
-          <ArrowLeftIcon className={styles.icono} />
+        <button onClick={handleBack} className={styles.botonIcono}>
+            <ArrowLeft className={styles.icono} />
         </button>
-
-        {/* BOTÓN DE COMPARTIR */}
-        <button 
-          onClick={handleShare} 
-          className={styles.botonIcono}
-          aria-label="Compartir"
-        >
-          <ShareIcon className={styles.icono} />
-        </button>
+        
+        <div style={{ position: 'relative' }}>
+            <button onClick={handleShare} className={styles.botonIcono}>
+                <Share2 className={styles.icono} />
+            </button>
+            {copiado && <span style={{position:'absolute', top:'100%', right:0, background:'#333', color:'#fff', padding:'4px', fontSize:'10px', borderRadius:'4px'}}>Copiado</span>}
+        </div>
       </div>
 
-      {/* --- AQUÍ VA EL RESTO DE TU CONTENIDO --- */}
-      {/* <img src={lugar?.imagenUrl} alt={lugar?.nombre} />
-        <h1>{lugar?.nombre}</h1>
-        <p>{lugar?.descripcion}</p>
-      */}
-      <p>Aquí va la foto, título y descripción...</p>
-      
+      {/* --- GRID (Info Izquierda - Comentarios Derecha) --- */}
+      <div className={styles.gridContenedor}>
+        
+        {/* COLUMNA IZQUIERDA: FOTO E INFO */}
+        <div className={styles.columnaInfo}>
+            {/* Aquí se aplica el tamaño del CSS (.infoImagen) */}
+            <img 
+                src={lugar.imagenUrl} 
+                alt={lugar.nombre} 
+                className={styles.infoImagen} 
+            />
 
-      {/* --- SECCIÓN DE COMENTARIOS (esta ya la tenías) --- */}
-      <ComentariosSection lugarId={lugarId} />
+            <span style={{ color: '#2563EB', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
+                {lugar.categoria}
+            </span>
 
+            <h1 className={styles.infoTitulo}>{lugar.nombre}</h1>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', color: '#6B7280' }}>
+                <MapPin size={16} color="#EF4444" />
+                <span style={{ fontSize: '14px' }}>San Juan del Río, Qro.</span>
+            </div>
+
+            <p className={styles.infoDescripcion}>
+                {lugar.acerca || lugar.descripcion}
+            </p>
+
+            {/* Botones de acción (Ruta / Calificar) */}
+            <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
+                <button 
+                    onClick={handleRuta}
+                    className={styles.botonRegresar} 
+                    style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                >
+                    <Navigation size={16} /> Cómo llegar
+                </button>
+                <button 
+                     onClick={scrollToComentarios}
+                     className={styles.botonIcono}
+                     style={{ borderRadius: '6px', padding: '8px 16px', width: 'auto', flex: 1, border: '1px solid #ccc' }}
+                >
+                    <Star size={16} color="#EAB308" /> Calificar
+                </button>
+            </div>
+        </div>
+
+        {/* COLUMNA DERECHA: COMENTARIOS */}
+        <div id="seccion-comentarios" className={styles.columnaComentarios}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '16px' }}>Opiniones</h3>
+            {/* Pasamos el slug limpio */}
+            <ComentariosSection lugarId={String(paramsDesenvueltos.slug)} />
+        </div>
+
+      </div>
     </div>
   );
 }
