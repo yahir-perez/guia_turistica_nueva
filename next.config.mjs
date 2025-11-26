@@ -1,32 +1,18 @@
+// next.config.mjs
 /** @type {import('next').NextConfig} */
-
-import withPWAInit from "@ducanh2912/next-pwa";
-
-const withPWA = withPWAInit({
-  dest: "public",
-  cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
-  reloadOnOnline: true,
-  disable: process.env.NODE_ENV === "development",
-});
+import withPWA from 'next-pwa'; // Importa el plugin
 
 const nextConfig = {
-  // 🚀 Desactiva el error de Turbopack
-  turbopack: {},
-
-  // 🔥 Fuerza a usar Webpack
-  webpack: (config) => {
-    return config;
-  },
-
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
-  },
+  reactStrictMode: true,
+  // Aquí puedes añadir otras configuraciones de Next.js
 };
 
-export default withPWA(nextConfig);
+// Configuración del PWA. Envuelve la configuración de Next.js.
+const pwaConfig = withPWA({
+  dest: 'public', // Directorio donde se generarán los archivos PWA (sw.js, workbox-*.js)
+  register: true, // Registra el Service Worker automáticamente
+  skipWaiting: true, // Para la actualización más rápida
+  // disable: process.env.NODE_ENV === 'development', // Desactivar PWA en desarrollo si quieres
+})(nextConfig);
+
+export default pwaConfig;
