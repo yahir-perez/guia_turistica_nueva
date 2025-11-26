@@ -1,4 +1,4 @@
-// app/page.js
+// app/page.js - CÓDIGO FINAL RESPONSIVO
 "use client";
 
 import { useState, useEffect } from "react";
@@ -54,20 +54,29 @@ export default function Home() {
   return (
     <main
       className="
-      flex flex-row h-screen 
+      flex flex-col h-screen 
+      lg:flex-row 
       bg-gradient-to-br from-blue-400 via-teal-300 to-yellow-200
       backdrop-blur-sm
       "
     >
       
-      {/* SIDEBAR */}
+      {/* COLUMNA DERECHA - MAPA (Primero en móvil, orden 2 en desktop) */}
+      <div className="flex-none h-[40vh] w-full lg:flex-1 lg:h-full lg:order-2">
+        <Mapa lugares={lugaresFiltrados} lugarSeleccionado={lugarSeleccionado} />
+      </div>
+
+
+      {/* SIDEBAR (Debajo en móvil, orden 1 en desktop) */}
       <div
         className="
-        w-[420px] h-full p-6 
-        bg-white/40 backdrop-blur-xl 
-        border-r border-white/20 
-        shadow-xl overflow-y-auto
-        rounded-tr-3xl rounded-br-3xl
+        w-full p-4 lg:w-[420px] 
+        lg:h-full lg:p-6 
+        bg-white/90 backdrop-blur-xl 
+        lg:border-r lg:border-white/20 
+        shadow-2xl overflow-y-auto
+        lg:rounded-tr-3xl lg:rounded-br-3xl
+        z-10 lg:order-1
         "
       >
         
@@ -75,13 +84,13 @@ export default function Home() {
         <div className="flex items-center mb-6 px-2">
           <Image 
             src="https://picsum.photos/id/1011/100/100"
-            width={60} 
-            height={60} 
+            width={48} 
+            height={48} 
             alt="Logo Guía SJR" 
             className="rounded-full shadow-lg mr-4" 
           />
 
-          <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight drop-shadow-sm">
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight drop-shadow-sm">
             Guía SJR
           </h1>
         </div>
@@ -102,13 +111,13 @@ export default function Home() {
         </div>
 
         {/* Filtros */}
-        <div className="flex flex-wrap gap-2 mb-6 px-1">
+        <div className="flex flex-wrap gap-2 mb-6 px-1 overflow-x-auto pb-2"> 
           {categorias.map(categoria => (
             <button
               key={categoria}
               onClick={() => setFiltro(categoria)}
               className={`
-                px-4 py-2 rounded-full text-sm font-semibold
+                px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap
                 transition-all duration-200 shadow-md
                 ${
                   filtro === categoria
@@ -138,11 +147,6 @@ export default function Home() {
           ))}
         </section>
 
-      </div>
-
-      {/* COLUMNA DERECHA - MAPA */}
-      <div className="flex-1 h-full">
-        <Mapa lugares={lugaresFiltrados} lugarSeleccionado={lugarSeleccionado} />
       </div>
       
     </main>

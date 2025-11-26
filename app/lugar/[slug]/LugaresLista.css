@@ -1,50 +1,114 @@
-/* En tu archivo LugaresLista.module.css */
+/* PaginaLugar.module.css - CÓDIGO FINAL RESPONSIVO */
 
+/* --- CONTENEDOR PRINCIPAL --- */
 .paginaContenedor {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
+  max-width: 1200px; /* Ancho máximo */
+  margin: 0 auto;    /* Centrado horizontalmente */
+  padding: 16px;     /* Espacio en los bordes */
 }
 
-.titulo {
-  font-size: 2rem;
-  font-weight: 700;
+/* --- ESTILOS DE BOTONES --- */
+.headerBotones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
-  text-align: center;
 }
 
-.gridLugares {
-  display: grid;
-  /* Crea columnas responsivas: 1 en móvil, 2 en tablet, 3 en desktop */
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-}
-
-.lugarCard {
+.botonIcono {
   background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  overflow: hidden; /* Para que la imagen no se salga de los bordes */
-  text-decoration: none; /* Quita el subrayado del link */
-  color: inherit; /* Hereda el color de texto */
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #E5E7EB;
+  border-radius: 9999px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s;
 }
 
-.lugarCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+.botonIcono:hover {
+  background-color: #F9FAFB;
 }
 
-.cardImagen {
+.icono {
+  width: 24px;
+  height: 24px;
+  color: #374151;
+}
+
+/* --- LAYOUT DE GRID RESPONSIVO --- */
+.gridContenedor {
+  display: grid;
+  grid-template-columns: 1fr; /* MÓVIL (por defecto): 1 columna (todo apilado) */
+  gap: 32px; /* Espacio entre info y comentarios */
+}
+
+/* ESCRITORIO (>= 1024px): 2 columnas */
+@media (min-width: 1024px) {
+  .gridContenedor {
+    /* 40% para la info, 60% para comentarios */
+    grid-template-columns: 40% 60%; 
+  }
+}
+
+/* --- ESTILOS COLUMNA INFO (Izquierda) --- */
+.columnaInfo {
+  /* En móvil, la imagen se ajustará al 100% del ancho del contenedor */
+}
+
+.infoImagen {
   width: 100%;
-  height: 200px;
-  object-fit: cover; /* Asegura que la imagen cubra el espacio */
-  background-color: #f3f4f6; /* Color de fondo mientras carga */
+  height: 300px; 
+  object-fit: cover; 
+  border-radius: 12px;
+  background-color: #F3F4F6;
+  margin-bottom: 16px;
 }
 
-.cardTitulo {
+.infoTitulo {
+  font-size: 2rem; /* Ligeramente más pequeño en móvil */
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 1024px) {
+    .infoTitulo {
+        font-size: 2.25rem; /* Vuelve al tamaño grande en escritorio */
+    }
+}
+
+.infoDescripcion {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+
+/* --- ESTILOS COLUMNA COMENTARIOS (Derecha) --- */
+.columnaComentarios {
+  /* Estará debajo en móvil, a la derecha en desktop */
+}
+
+/* ... Mensaje de error (centeredMessage, botonRegresar) ... */
+.centeredMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
   font-size: 1.25rem;
-  font-weight: 600;
-  padding: 16px;
-  color: #1f2937;
+  color: #555;
+}
+
+.botonRegresar {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
